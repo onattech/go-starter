@@ -10,25 +10,25 @@ import (
 	"github.com/AlecAivazis/survey/v2"
 )
 
+var home, _ = os.UserHomeDir()
+
+const defaultProjectName = "go-my-project"
+
 // the questions to ask
 var qs = []*survey.Question{
 	{
 		Name:     "name",
-		Prompt:   &survey.Input{Message: "What is the project name?", Default: "go-my-project"},
+		Prompt:   &survey.Input{Message: "What is the project name?", Default: defaultProjectName},
 		Validate: survey.Required,
 	},
 	{
 		Name: "path",
 		Prompt: &survey.Select{
 			Message: "Choose the path:",
-			Options: []string{"/home/loku/coding/myProjects/GO", "/home/loku", "/home/loku/Desktop"},
-			Default: "/home/loku/coding/myProjects/GO",
+			Options: []string{home + "/coding/myProjects/GO", home, home + "/Desktop"},
+			Default: home + "/coding/myProjects/GO",
 		},
 	},
-	// {
-	// 	Name:   "age",
-	// 	Prompt: &survey.Input{Message: "How old are you?"},
-	// },
 }
 
 func main() {
@@ -36,7 +36,6 @@ func main() {
 	answers := struct {
 		Name string // survey will match the question and field names
 		Path string `survey:"path"` // or you can tag fields to match a specific name
-		// Age  int    // if the types don't match, survey will convert it
 	}{}
 
 	// perform the questions
@@ -45,7 +44,7 @@ func main() {
 		fmt.Println(err.Error())
 		return
 	}
-	fmt.Printf("%+v\n", answers)
+	// fmt.Printf("%+v\n", answers)
 
 	// Make project folder
 	err = os.Mkdir(answers.Path+"/"+answers.Name, 0755)
@@ -95,5 +94,18 @@ func main() {
 	cmd = exec.Command("git", "commit", "-m", "\"Initial commit\"")
 	cmd.Dir = answers.Path + "/" + answers.Name
 	cmd.Run()
+
+	// Ask if user want to initialize a repo
+	var github bool
+	prompt := &survey.Confirm{
+		Message: "Do you like pie?",
+		Default: true,
+	}
+	survey.AskOne(prompt, &github)
+
+	// Quit if the user doesn't want a github repo
+	if github == false {
+		return
+	}
 
 }
