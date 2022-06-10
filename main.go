@@ -21,8 +21,8 @@ var qs = []*survey.Question{
 		Name: "path",
 		Prompt: &survey.Select{
 			Message: "Choose the path:",
-			Options: []string{"~/coding/myProjects/GO", "~", "~/Desktop"},
-			Default: "~/coding/myProjects/GO",
+			Options: []string{"/home/loku/coding/myProjects/GO", "/home/loku", "/home/loku/Desktop"},
+			Default: "/home/loku/coding/myProjects/GO",
 		},
 	},
 	// {
@@ -48,23 +48,23 @@ func main() {
 	fmt.Printf("%+v\n", answers)
 
 	// Make project folder
-	err = os.Mkdir("/home/loku/coding/myProjects/GO/"+answers.Name, 0755)
+	err = os.Mkdir(answers.Path+"/"+answers.Name, 0755)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// Add main.go file
 	s := []byte("package main\n\nfunc main() {\n}")
-	ioutil.WriteFile("/home/loku/coding/myProjects/GO/"+answers.Name+"/main.go", s, 0755)
+	ioutil.WriteFile(answers.Path+"/"+answers.Name+"/main.go", s, 0755)
 
 	// Go mode init
 	cmd := exec.Command("go", "mod", "init", "github.com/onattech/"+answers.Name)
-	cmd.Dir = "/home/loku/coding/myProjects/GO/" + answers.Name
+	cmd.Dir = answers.Path + "/" + answers.Name
 	cmd.Run()
 
 	// Git init
 	cmd = exec.Command("git", "init")
-	cmd.Dir = "/home/loku/coding/myProjects/GO/" + answers.Name
+	cmd.Dir = answers.Path + "/" + answers.Name
 	cmd.Run()
 
 	// Add .gitignore file
@@ -84,16 +84,16 @@ func main() {
 # Dependency directories (remove the comment below to include it)
 # vendor/
 	`)
-	ioutil.WriteFile("/home/loku/coding/myProjects/GO/"+answers.Name+"/.gitignore", s, 0644)
+	ioutil.WriteFile(answers.Path+"/"+answers.Name+"/.gitignore", s, 0644)
 
 	// Git add all
 	cmd = exec.Command("git", "add", ".")
-	cmd.Dir = "/home/loku/coding/myProjects/GO/" + answers.Name
+	cmd.Dir = answers.Path + "/" + answers.Name
 	cmd.Run()
 
 	// Git initial commit
 	cmd = exec.Command("git", "commit", "-m", "\"Initial commit\"")
-	cmd.Dir = "/home/loku/coding/myProjects/GO/" + answers.Name
+	cmd.Dir = answers.Path + "/" + answers.Name
 	cmd.Run()
 
 }
