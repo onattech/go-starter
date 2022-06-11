@@ -98,7 +98,7 @@ func main() {
 	// Ask if user want to initialize a repo
 	var github bool
 	prompt := &survey.Confirm{
-		Message: "Do you like pie?",
+		Message: "Would you like to initialize a github repo?",
 		Default: true,
 	}
 	survey.AskOne(prompt, &github)
