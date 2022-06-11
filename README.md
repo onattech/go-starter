@@ -11,6 +11,9 @@ It currently:
 You will have to update lines 17,18 and 19 in the main.go file to your needs then build if you want a standalone executable.
 ![image](https://user-images.githubusercontent.com/53895969/173196516-80ebe0bd-b2f3-44f3-80c3-21458fa25f36.png)
 
+## Requirements
+You will need [GitHub CLI](https://cli.github.com/) installed and configured if you want to initialize a GitHub repository.
+
 ## Linux How-To
 1. (Optional) Setup a new launcher on the desktop <br>![image](https://user-images.githubusercontent.com/53895969/173196777-1885846c-e360-4843-97f9-d36d685bd09d.png)
 
