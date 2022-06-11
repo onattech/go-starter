@@ -26,7 +26,7 @@ You will need [GitHub CLI](https://cli.github.com/) installed and configured if 
 7. Choose repository visibility. <br>![image](https://user-images.githubusercontent.com/53895969/173197009-9e657d93-7bb7-4957-9d91-c084cd2d6af7.png)
 8. Type what the remote should be called. Defaults to origin on hitting enter. <br>![image](https://user-images.githubusercontent.com/53895969/173197040-5b1b04f2-f81e-49f9-b0bf-b08ddd73a903.png)
 9. You will prompted on successful repository initialization. <br>![image](https://user-images.githubusercontent.com/53895969/173197073-454d6172-2e20-480e-a460-1c78f283374f.png)
-10. If all goes well, a vscode instance should start with your new project directory, have git initialized, and its initial commit pushed to the new repository. <br>![image](https://user-images.githubusercontent.com/53895969/173197122-611d2f0c-1540-402c-91be-b738e61179c7.png)
+10. If all goes well, a vscode instance should start within your new project directory, have git initialized, and its initial commit pushed to the new repository. <br>![image](https://user-images.githubusercontent.com/53895969/173197122-611d2f0c-1540-402c-91be-b738e61179c7.png)
 
 
 
