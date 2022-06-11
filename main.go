@@ -146,10 +146,11 @@ func main() {
 		time.Sleep(time.Second)
 		// Start vscode
 		cmd = exec.Command("code", localAnswers.Path+"/"+localAnswers.Name)
-		cmd.Start()
+		cmd.Run()
 		return
 	}
 
+	// Check if the user has GitHub CLI installed
 	if utils.IsCommandAvailable("gh") == false {
 		fmt.Println("GitHub CLI isn't installed on your system. Go to https://cli.github.com/")
 		time.Sleep(time.Second * 3)
@@ -166,16 +167,29 @@ func main() {
 		return
 	}
 
+	// check is the repo already exists
+	cmd = exec.Command("gh", "repo", "view", "https://github.com/onattech/"+githubAnswers.Name)
+	err = cmd.Run()
+	if err == nil {
+		fmt.Println("A repo with that name already exists")
+
+		// Ask for the repo name again
+		prompt := &survey.Input{
+			Message: "What should the new remote be called?",
+		}
+		survey.AskOne(prompt, &githubAnswers.Name)
+	}
+
 	// Initialize github repo
 	cmd = exec.Command("gh", "repo", "create",
-		localAnswers.Name,
+		githubAnswers.Name,
 		"--"+githubAnswers.Visibility,
 		"-d", githubAnswers.Description,
 		"-r", githubAnswers.Remote, "-s", "./")
 	cmd.Dir = localAnswers.Path + "/" + localAnswers.Name
 	err = cmd.Run()
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatalln("Can't initialize GitHub repo", err)
 	}
 	fmt.Println("✅ Github repo initialized")
 
@@ -190,5 +204,8 @@ func main() {
 
 	// Start vscode
 	cmd = exec.Command("code", localAnswers.Path+"/"+localAnswers.Name)
-	cmd.Start()
+	e := cmd.Run()
+	if e != nil {
+		fmt.Println("can't start vscode", e)
+	}
 }
