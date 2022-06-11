@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/AlecAivazis/survey/v2"
+	"github.com/onattech/go-starter/utils"
 )
 
 var home, _ = os.UserHomeDir()
@@ -149,6 +150,15 @@ func main() {
 		return
 	}
 
+	if utils.IsCommandAvailable("gh") == false {
+		fmt.Println("GitHub CLI isn't installed on your system. Go to https://cli.github.com/")
+		time.Sleep(time.Second * 3)
+		// Start vscode
+		cmd = exec.Command("code", localAnswers.Path+"/"+localAnswers.Name)
+		cmd.Start()
+		return
+	}
+
 	// perform the github questions
 	err = survey.Ask(githubQuestions, &githubAnswers)
 	if err != nil {
@@ -176,7 +186,7 @@ func main() {
 	fmt.Println("✅ Pushed to github")
 
 	fmt.Println("Repo successfully initialized, starting vscode...")
-	time.Sleep(time.Second)
+	time.Sleep(time.Second * 1)
 
 	// Start vscode
 	cmd = exec.Command("code", localAnswers.Path+"/"+localAnswers.Name)
