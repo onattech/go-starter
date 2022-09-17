@@ -39,7 +39,7 @@ var localQuestions = []*survey.Question{
 var githubQuestions = []*survey.Question{
 	{
 		Name:     "repoName",
-		Prompt:   &survey.Input{Message: "Repository name", Default: defaultProjectName},
+		Prompt:   &survey.Input{Message: "Repository name"},
 		Validate: survey.Required,
 	},
 	{
@@ -158,6 +158,7 @@ func main() {
 	}
 
 	// perform the github questions
+	githubQuestions[0].Prompt = &survey.Input{Message: "Repository name", Default: answers.LocalName}
 	err = survey.Ask(githubQuestions, &answers)
 	if err != nil {
 		fmt.Println(err.Error())
