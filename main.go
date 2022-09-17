@@ -88,9 +88,12 @@ func main() {
 	ioutil.WriteFile(answers.LocalPath+"/"+answers.LocalName+"/main.go", s, 0755)
 
 	// Go mode init
-	cmd := exec.Command("go", "mod", "init", githubAccount+answers.LocalName)
+	cmd := exec.Command("/usr/local/go/bin/go", "mod", "init", githubAccount+answers.LocalName)
 	cmd.Dir = answers.LocalPath + "/" + answers.LocalName
-	cmd.Run()
+	err = cmd.Run()
+	if err != nil {
+		log.Println("err", err)
+	}
 
 	// Git init
 	cmd = exec.Command("git", "init")
