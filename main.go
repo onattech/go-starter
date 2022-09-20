@@ -84,7 +84,7 @@ func main() {
 	}
 
 	// Add main.go file
-	s := []byte("package main\n\nfunc main() {\n}")
+	s := []byte("package main\n\nimport \"log\"\n\nfunc init(){\nlog.SetFlags(log.Ltime | log.Lshortfile)\n}\n\nfunc main() {\n log.Println(\"Hi\")\n}")
 	ioutil.WriteFile(answers.LocalPath+"/"+answers.LocalName+"/main.go", s, 0755)
 
 	// Go mode init
